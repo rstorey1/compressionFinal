@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <string.h>
 //#include "huffman.c"
 //#include "rle.c"
 
@@ -10,32 +11,32 @@ int doesFileExist(char *);//done
 int isTextFile(char *);//done
 void printResults(int []);
 //extern encode(char *, int);
-
+int fileSize(char *);
 
 int main(int argc, char *argv[]){
 	int numberOfFiles;
-	numberOfFiles=argc-1;
-	commandLineInput(argc, argv, numberOfFiles);
+       	numberOfFiles=argc-1;
+	//commandLineInput(argc, argv, numberOfFiles);
+	printf("file size is %d bytes \n",fileSize(argv[1]));
+	
 
-	//printf("result of file test is %d\n", isTextFile("blahh.txt"));//argv file names will start at 1
-
-	//encode(argv[1], 20);	
-}
-
-void printResults(int results[]){
 		
 }
 
+int fileSize(char *name){
+	FILE *file;
+        file=fopen(name, "r");
+	int size=0;
 
+	fseek(file, 0, SEEK_END);
+	size=ftell(file);
+	rewind(file);
 
-
-
-
-
-
-
-
-int isTextFile(char *name){//works
+        fclose(file);      
+        free(file);
+        return size;
+}
+int isTextFile(char *name){
 	name= strrchr(name, '.');
 	if((name!=NULL)&&!(strcmp(name, ".txt"))){
 		return 1;
@@ -72,7 +73,7 @@ void commandLineInput(int argc, char *argv[], int numFiles){
 		exit(1);
 	}
 }
-int doesFileExist(char *f){//works
+int doesFileExist(char *f){
 	FILE *file;
 	if(file=fopen(f, "r")){
 		fclose(file);
