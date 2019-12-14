@@ -3,37 +3,45 @@
 #include <unistd.h>
 #include <string.h>
 #include <string.h>
-//#include "huffman.c"
+#include <time.h>
 //#include "rle.c"
 
 void commandLineInput(int, char **, int );//done
 int doesFileExist(char *);//done
 int isTextFile(char *);//done
-void printStats(char *, int, int, int);
-//extern rleCompress(char *, int);
+void printStats(char *, int, int, double);
+extern void  rleCompress(char *);
 int fileSize(char *);//done
 void runCompressors(char **, int);
 
 int main(int argc, char *argv[]){
 	int numberOfFiles;
-       	numberOfFiles=argc-1;
-	
-	commandLineInput(argc, argv, numberOfFiles);
-	
-	runCompressors(argv, numberOfFiles);
-	 	
+     	numberOfFiles=argc-1;
+	commandLineInput(argc, argv, numberOfFiles);	
+	runCompressors(argv, numberOfFiles); 	
 }
 
 void runCompressors(char *fileList[], int numFiles){
-	int ogSize[numFiles];
-	int newSize[numFiles];
-	int times[numFiles];
-
-	printStats("wopto.txt", 1000, 500, 20);
+	int secs=0;
+	int ogSize=0;
+	int newSize=0;
+	char *currentFile=NULL;
+	for(int i=1; i<=numFiles; i++){
+		currentFile=fileList[i];
+		ogSize=fileSize(currentFile);
+		clock_t time;
+		time=clock();
+		rleCompress(currentFile);
+		time=clock()-time;
+		double secs= ((double)time)/CLOCKS_PER_SEC;
+		printf("this far");
+		//newSize=fileSize("compressed.txt");
+		printStats(currentFile, ogSize, newSize, secs);
+	}
 }
-void printStats(char *name, int oldSize, int newSize, int time){
+void printStats(char *name, int oldSize, int newSize, double time){
 
-	printf("%s has been compressed. Old size:%dbytes New size:%dbytes Time:%d milliseconds\n", name, oldSize, newSize, time);
+	printf("%s has been compressed. Old size:%dbytes New size:%dbytes Time:%f seconds\n", name, oldSize, newSize, time);
 }
 int fileSize(char *name){
 	FILE *file;
