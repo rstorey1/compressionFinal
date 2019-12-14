@@ -31,17 +31,16 @@ void runCompressors(char *fileList[], int numFiles){
 		ogSize=fileSize(currentFile);
 		clock_t time;
 		time=clock();
-		rleCompress(currentFile);
+		//rleCompress(currentFile);
 		time=clock()-time;
 		double secs= ((double)time)/CLOCKS_PER_SEC;
-		printf("this far");
 		//newSize=fileSize("compressed.txt");
 		printStats(currentFile, ogSize, newSize, secs);
 	}
 }
 void printStats(char *name, int oldSize, int newSize, double time){
 
-	printf("%s has been compressed. Old size:%dbytes New size:%dbytes Time:%f seconds\n", name, oldSize, newSize, time);
+	printf("%s has been compressed. Old size: %d bytes New size: %d bytes Time: %f seconds\n", name, oldSize, newSize, time);
 }
 int fileSize(char *name){
 	FILE *file;

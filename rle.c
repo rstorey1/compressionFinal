@@ -5,18 +5,20 @@
 
 #define MAXSIZE 1000
 void rleCompress(char* src){
+	FILE* filePointer;
+	int a=0;
+	char c;
+	filePointer=fopen(src, "r");
+	for(a=getc(filePointer);a!=EOF; a=getc(filePointer))
+		a+=a;
 	int rLen;
    	char count[MAXSIZE];
-    	int len = strlen(src);
-   	char* dest = (char*)malloc(sizeof(char) * (len * 2 + 1));
+    	int len = a;
+   	char* dest=(char*)malloc(sizeof(char)*(len*2+1));
     	int i, j = 0, k; 
-	FILE* filePointer;
-	//FILE* filePointerWrite;
-	filePointer=fopen(src, "r");
-	//filePointerWrite=fopen("compressed.txt", "rw");
+	FILE* filePointerWrite;
+	filePointerWrite=fopen("compressed.txt", "w+");
 	
-
-
    	for (i = 0; i < len; i++){
         	dest[j++] = src[i];
        		rLen = 1;
@@ -30,6 +32,11 @@ void rleCompress(char* src){
         	}
    	}
    	dest[j] = '\0'; 
+
+	fclose(filePointer);
+	fclose(filePointerWrite);
+	free(filePointer);
+	free(filePointerWrite);
 	//need to write dest to file "compressed.txt"
    
 }  
