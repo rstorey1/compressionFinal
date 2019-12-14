@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-char* encode(char* src,int size){
+void rleCompress(char* src,int size){
     int rLen;
     char count[size];
     int len = strlen(src);
@@ -23,5 +23,6 @@ char* encode(char* src,int size){
         }
     }
     dest[j] = '\0'; 
-    return dest; 
+	//need to write dest to file
+   
 }  

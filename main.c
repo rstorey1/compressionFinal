@@ -6,23 +6,35 @@
 //#include "huffman.c"
 //#include "rle.c"
 
-void commandLineInput(int, char **, int );//done?Maybe change it to return array of the names of files
+void commandLineInput(int, char **, int );//done
 int doesFileExist(char *);//done
 int isTextFile(char *);//done
-void printResults(int []);
-//extern encode(char *, int);
-int fileSize(char *);
+void printStats(char *, int, int, int);
+//extern rleCompress(char *, int);
+int fileSize(char *);//done
+void runCompressors(char **, int);
 
 int main(int argc, char *argv[]){
 	int numberOfFiles;
        	numberOfFiles=argc-1;
-	//commandLineInput(argc, argv, numberOfFiles);
-	printf("file size is %d bytes \n",fileSize(argv[1]));
 	
-
-		
+	commandLineInput(argc, argv, numberOfFiles);
+	
+	runCompressors(argv, numberOfFiles);
+	 	
 }
 
+void runCompressors(char *fileList[], int numFiles){
+	int ogSize[numFiles];
+	int newSize[numFiles];
+	int times[numFiles];
+
+	printStats("wopto.txt", 1000, 500, 20);
+}
+void printStats(char *name, int oldSize, int newSize, int time){
+
+	printf("%s has been compressed. Old size:%dbytes New size:%dbytes Time:%d milliseconds\n", name, oldSize, newSize, time);
+}
 int fileSize(char *name){
 	FILE *file;
         file=fopen(name, "r");
